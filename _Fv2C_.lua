@@ -923,17 +923,17 @@ local offsets = {
   GetCraftingTimeMultiplierForBuildingLevel=0x2978764, --UpgradeableBuilding::GetCraftingTimeMultiplierForBuildingLevel
   get_KnightRequestIntervalSeconds=0x2D97A58, --AllianceKnightsManager::get_KnightRequestIntervalSeconds
   get_HandsToSend=0x2D998A0, --AllianceManager::get_HandsToSend
-  CreateOffer=0x365A090+0x34, --SeafarerManager::CreateOffer
-  MariesOrdersAskButton=0x25FA744, --CoopOrderCard_ViewModel::get_getAmountHas
-  MariesOrdersSellActive=0x25FA8E4, --CoopOrderCard_ViewModel::get_getAmountRequired
-  AutoBuyMarket=0x3651014, --SeafarerManager::GetAutoBuyTime
+  CreateOffer=0x365E090, --SeafarerManager::CreateOffer
+  get_getAmountHas=0x25FA744, --CoopOrderCard_ViewModel::get_getAmountHas
+  get_getAmountRequired=0x25FA8E4, --CoopOrderCard_ViewModel::get_getAmountRequired
+  GetAutoBuyTime=0x3651014, --SeafarerManager::GetAutoBuyTime
   GetCountyFairPointsMultiplierForBuildingLevel=0x297C7D4, --UpgradeableBuilding::GetCountyFairPointsMultiplierForBuildingLevel
-  WorkshopsCraftingAmount=0x29CC844+0x38, --WorkshopManager::StartCrafting
-  CoopSlots8=0x3654C68, --SeafarerManager::GetNumCoopOnlySlotsInUse
-  UnlockChatEmoji_1=0x307027C+0x20, --GameExpression::canShowThanksGivingStickers
-  UnlockChatEmoji_2=0x30703B8+0x20, --GameExpression::canShowChristmasStickers
-  ProspectorCornerFreePlay=0x3771E00, --GameOfChanceGame::CanPlayForFree
-  SetBarnSeaway=0x3509628, --ProtoStorageLevel::get_totalItemsCount
+  WorkshopsCraftingAmount=0x29CC844, --WorkshopManager::StartCrafting
+  GetNumCoopOnlySlotsInUse=0x3654C68, --SeafarerManager::GetNumCoopOnlySlotsInUse
+  canShowThanksGivingStickers=0x307027C, --GameExpression::canShowThanksGivingStickers
+  canShowChristmasStickers=0x30703B8, --GameExpression::canShowChristmasStickers
+  CanPlayForFree=0x3771E00, --GameOfChanceGame::CanPlayForFree
+  get_totalItemsCount=0x3509628, --ProtoStorageLevel::get_totalItemsCount
   get_IsCheaterFixOn=0x370B574, --BoatRaceV4Context::get_IsCheaterFixOn
   get_CheaterTrackingEnabled=0x36FB3D0, --BoatRaceV4Context::get_CheaterTrackingEnabled
   set_CheaterTrackingEnabled=0x36FB3D8, --BoatRaceV4Context::set_CheaterTrackingEnabled
@@ -946,7 +946,7 @@ local offsets = {
   get_personalQuotaCompleted=0x2B88C08, --BaseBoatRaceContext::get_personalQuotaCompleted
   get_GetBonusTaskSkipPrice=0x25E824C, --BoatRace_TaskTabViewModel::get_GetBonusTaskSkipPrice
   getAmount=0x3271F00, --ProtoQuestTask::getAmount
-  set_MyWeeklyContribution=0x3734C48+0x28, --CoopOrderHelpContext::set_MyWeeklyContribution
+  set_MyWeeklyContribution=0x3734C48, --CoopOrderHelpContext::set_MyWeeklyContribution
   
   },
   -- ["1.2.4"] = {
@@ -954,6 +954,8 @@ local offsets = {
   -- CanExpandWithCoins=0x41853b8
   -- },
 }
+
+
 
 local version = gg.getTargetInfo().versionName
 local currentOffset = offsets[version]
@@ -1098,12 +1100,12 @@ end
 ----------------
 
 function SG_ON()
-    setValue(currentOffset.CreateOffer, 4, "~A8 MOV W22, WZR")
+    setValue(currentOffset.CreateOffer+0x34, 4, "~A8 MOV W22, WZR")
     gg.toast("- Hack Enabled -")
     return true
 end
 function SG_OFF()
-    reset(currentOffset.CreateOffer)
+    reset(currentOffset.CreateOffer+0x34)
     gg.toast("- Hack Disabled -")
     return nil
 end
@@ -1122,37 +1124,37 @@ function QuestBookFastFinish_OFF()
 end
 
 function MariesOrdersAskButton_ON()
-    setHex(currentOffset.MariesOrdersAskButton, "00 00 80 D2 C0 03 5F D6")
+    setHex(currentOffset.get_getAmountHas, "00 00 80 D2 C0 03 5F D6")
     gg.toast("- Maries Orders Ask Button Enabled -")
     return true
 end
 
 function MariesOrdersAskButton_OFF()
-    reset(currentOffset.MariesOrdersAskButton)
+    reset(currentOffset.get_getAmountHas)
     gg.toast("- Maries Orders Ask Button Disabled -")
     return nil
 end
 
 function MariesOrdersSellActive_ON()
-    setHex(currentOffset.MariesOrdersSellActive, "00 00 80 D2 C0 03 5F D6")
+    setHex(currentOffset.get_getAmountRequired, "00 00 80 D2 C0 03 5F D6")
     gg.toast("- Maries Orders Sell Active Enabled -")
     return true
 end
 
 function MariesOrdersSellActive_OFF()
-    reset(currentOffset.MariesOrdersSellActive)
+    reset(currentOffset.get_getAmountRequired)
     gg.toast("- Maries Orders Sell Active Disabled -")
     return nil
 end
 
 function AutoBuyMarket_ON()
-    setHex(currentOffset.AutoBuyMarket, "20 00 80 D2 C0 03 5F D6")
+    setHex(currentOffset.GetAutoBuyTime, "20 00 80 D2 C0 03 5F D6")
     gg.toast("- Auto Buy (Market) Enabled -")
     return true
 end
 
 function AutoBuyMarket_OFF()
-    reset(currentOffset.AutoBuyMarket)
+    reset(currentOffset.GetAutoBuyTime)
     gg.toast("- Auto Buy (Market) Disabled -")
     return nil
 end
@@ -1202,7 +1204,7 @@ function WorkshopsCraftingAmount_ON()
     local edv1 = "~A8 MOV W22, #0x" .. x2
 
     -- Set the offset for the hack (replace 0x29CC844+0x38 with actual offset if needed)
-    I[1] = currentOffset.WorkshopsCraftingAmount
+    I[1] = currentOffset.WorkshopsCraftingAmount+0x38
 
     original()
     gg.loadResults(ORIG)
@@ -1244,40 +1246,40 @@ function WorkshopsCraftingAmount_OFF()
 end
 
 function CoopSlots8_ON()
-    setHex(currentOffset.CoopSlots8, "00 00 80 D2 C0 03 5F D6")
+    setHex(currentOffset.GetNumCoopOnlySlotsInUse, "00 00 80 D2 C0 03 5F D6")
     gg.toast("- Enable 8 Co-op slots Enabled -")
     return true
 end
 
 function CoopSlots8_OFF()
-    reset(currentOffset.CoopSlots8)
+    reset(currentOffset.GetNumCoopOnlySlotsInUse)
     gg.toast("- Enable 8 Co-op slots Disabled -")
     return nil
 end
 
 function UnlockChatEmoji_ON()
-    setValue(currentOffset.UnlockChatEmoji_1, 4, "~A8 MOV X19, XZR")
-    setValue(currentOffset.UnlockChatEmoji_2, 4, "~A8 MOV X19, XZR")
+    setValue(currentOffset.canShowThanksGivingStickers+0x20, 4, "~A8 MOV X19, XZR")
+    setValue(currentOffset.canShowChristmasStickers+0x20, 4, "~A8 MOV X19, XZR")
     gg.toast("- Unlock Chat Emoji Enabled -")
     return true
 end
 
 function UnlockChatEmoji_OFF()
-    reset(currentOffset.UnlockChatEmoji_1)
-    reset(currentOffset.UnlockChatEmoji_2)
+    reset(currentOffset.canShowThanksGivingStickers+0x20)
+    reset(currentOffset.canShowChristmasStickers+0x20)
     gg.toast("- Unlock Chat Emoji Disabled -")
     return nil
 end
 
 
 function ProspectorCornerFreePlay_ON()
-    setHex(currentOffset.ProspectorCornerFreePlay, "20 00 80 D2 C0 03 5F D6")
+    setHex(currentOffset.CanPlayForFree, "20 00 80 D2 C0 03 5F D6")
     gg.toast("- PORSPECTOR CORNER FREE PLAY Enabled -")
     return true
 end
 
 function ProspectorCornerFreePlay_OFF()
-    reset(currentOffset.ProspectorCornerFreePlay)
+    reset(currentOffset.CanPlayForFree)
     gg.toast("- PORSPECTOR CORNER FREE PLAY Disabled -")
     return nil
 end
@@ -1295,13 +1297,13 @@ function SetBarnSeaway_ON()
     -- Accept either negative or positive within allowed range
     if userInput >= 1 and userInput <= 99999 then
         -- Positive number branch: normal 32-bit int inject
-        injectAssembly(currentOffset.SetBarnSeaway, userInput) -- 32-bit int inject
+        injectAssembly(currentOffset.get_totalItemsCount, userInput) -- 32-bit int inject
         gg.toast("- Set Barn Seaway: " .. userInput .. " -")
     elseif userInput < 0 then
         -- Negative number branch: generate hex patch via hexG & setHex
         local hexValue = hexG(userInput)
         if hexValue then
-            setHex(currentOffset.SetBarnSeaway, hexValue)
+            setHex(currentOffset.get_totalItemsCount, hexValue)
             gg.toast("- Set Barn Seaway (Negative) patched -")
         else
             gg.alert("Error generating hex for negative value")
@@ -1318,7 +1320,7 @@ end
 
 
 function SetBarnSeaway_OFF()
-    reset(currentOffset.SetBarnSeaway)
+    reset(currentOffset.get_totalItemsCount)
     gg.toast("- Set Barn Seaway Hack Disabled -")
     return nil
 end
@@ -1435,7 +1437,7 @@ end
 
 function Deco_OFF()
     gg.toast("-  Can't turn Off This hack -")
-    return nil
+    return true
 end
 
 function AHM_ON()
@@ -1451,7 +1453,7 @@ end
 
 function AHM_OFF()
     gg.toast("-  Can't turn Off This hack -")
-    return nil
+    return true
 end
 
 
@@ -1459,12 +1461,18 @@ strv1=16
 strv2=7274563
 strv3=7340143
 strv4=7471183
+
+
 function MWS_ON()
   x="CoopOrderHelpContext" 
   o=0x0 t=4 findClass()
   o=0x8 t=4 applyOffset()
   x=0 t=4 refineNum()
-  checkResults() if E==0 then gg.alert("Sorry something wrong happened") return end
+  checkResults() 
+  if E==0 then 
+     gg.alert("Sorry something wrong happened") 
+     return nil
+  end
   o=0x10 t=32 applyOffset()
   o=0x10 t=32 sv=strv1 checkString()
   o=0x14 t=32 sv=strv2 checkString()
@@ -1474,19 +1482,103 @@ function MWS_ON()
   x=0 t=4 editAll()
   freezeValues()
   clearAll()
-  setValue(currentOffset.set_MyWeeklyContribution, 4, "~A8 MOV W20, #0x64")
+  setValue(currentOffset.set_MyWeeklyContribution+0x28, 4, "~A8 MOV W20, #0x64")
   gg.toast("- Marie weekly score enabled -")
   return true
 end
 
 
 function MWS_OFF()
-    reset(currentOffset.set_MyWeeklyContribution)
+    reset(currentOffset.set_MyWeeklyContribution+0x28)
     gg.toast("- Weekly  Score Disabled-")
     return nil
 end
 
 
+
+function HPass_ON()
+  x="FarmDiaryFeaturePassManager"
+  o=0x18 t=1 findClass()
+  checkResults() 
+  if E==0 then 
+     gg.alert("Error : Meoww Happened") 
+     return nil 
+  end
+  x=0 t=1 refineNum()
+  x=1 t=1 editAll()
+  clearAll()
+  gg.alert("🙂 Hairloom Pass Purchased ...\n👉 Now Restart Your Game To See Changes....")
+  return true
+end
+
+
+function HPass_OFF()
+    gg.toast("-  Can't turn Off This hack -")
+    return true
+end
+
+
+function MPass_ON()
+  x="MysteryCollectionSeasonPassManager"
+  o=0x20 t=1 findClass()
+  checkResults() 
+  if E==0 then 
+     gg.alert("Error : Meoww Happened") 
+     return nil 
+  end
+  x=0 t=1 refineNum()
+  x=1 t=1 editAll()
+  clearAll()
+  gg.alert("🙂 Mystery Master Pass Purchased ...\n👉 Now Restart Your Game To See Changes....")
+  return true
+end
+
+
+function MPass_OFF()
+    gg.toast("-  Can't turn Off This hack -")
+    return true
+end
+
+function ELPass_ON()
+  x="BattlePassFeaturePassManager"
+  o=0x38 t=4 findClass()
+  checkResults() 
+  if E==0 then 
+     gg.alert("Error : Meoww Happened") 
+     return nil 
+  end
+  x="0~1" t=4 refineNum()
+  x=2 t=4 editAll()
+  clearAll()
+  gg.alert("🙂 Elite Plus Badge Purchased ...\n👉 Now Restart Your Game To See Changes....")
+  return true
+end
+
+
+function ELPass_OFF()
+    gg.toast("-  Can't turn Off This hack -")
+    return true
+end
+
+function ELtoken_ON()
+  x="BattlePassTask"
+  o=0x20 t=4 findClass()
+  checkResults() 
+  if E==0 then 
+     gg.alert("Error : Meoww Happened") 
+     return nil 
+  end
+  x=0 t=4 editAll()
+  clearAll()
+  gg.alert("🔓 Success.....")
+  return true
+end
+
+
+function ELtoken_OFF()
+    gg.toast("-  Can't turn Off This hack -")
+    return true
+end
 
 
 ----------- MENU -----------
@@ -1494,7 +1586,7 @@ end
 gg.setVisible(true)
 local menuList = {
     "❄️ FREEZ ALL ITEMS",
-    "🪙 EXPEND FARM WITH COINS",
+    "💰 EXPEND FARM WITH COINS",
     "🗝️ ITEM COST 0 KEY",
     "🏕️ FAST FARMING",
     "🙌 REQUEST FARMHANDS",
@@ -1515,9 +1607,13 @@ local menuList = {
     "⛵ (BR) ENTER BONUS MODE",
     "⛵ (BR) BONUS TASK SKIP PRICE",
     "⛵ (BR) TASK REQUIREMENT (1)",
-    "🪩 UNLIMITED DECORATION",
+    "⭐ UNLIMITED DECORATION",
     "🎖️ ACTIVE HIDDEN MARKET ITEMS",
-    "🫅 MARIES ORDER WEEKLY SCORE",
+    "🎯 MARIES ORDER WEEKLY SCORE",
+    "🔓 UNLOCK HAIRLOOM PASS",
+    "🔓 UNLOCK MYSTERY MASTER PASS",
+    "🔓 UNLOCK ELITE PLUS BADGE",
+    "🎃 AUTO COMPLETE ELITE TOKENS",
     "🚫 EXIT SCRIPT...."
 }
 
@@ -1529,6 +1625,10 @@ end
 gg.toast("- Translation Completed! -")
 gg.setVisible(true)
 local checkList = {
+    nil,
+    nil,
+    nil,
+    nil,
     nil,
     nil,
     nil,
@@ -1763,13 +1863,45 @@ if tsu[25] ~= checkList[25] then
     end
 end
 
-
-
-
-
-
-
+if tsu[26] ~= checkList[26] then
     if tsu[26] then
+        checkList[26] = HPass_ON()
+    else
+        checkList[26] = HPass_OFF()
+    end
+end
+
+if tsu[27] ~= checkList[27] then
+    if tsu[27] then
+        checkList[27] = MPass_ON()
+    else
+        checkList[27] = MPass_OFF()
+    end
+end
+
+if tsu[28] ~= checkList[28] then
+    if tsu[28] then
+        checkList[28] = ELPass_ON()
+    else
+        checkList[28] = ELPass_OFF()
+    end
+end
+
+if tsu[29] ~= checkList[29] then
+    if tsu[29] then
+        checkList[29] = ELtoken_ON()
+    else
+        checkList[29] = ELtoken_OFF()
+    end
+end
+
+
+
+
+
+
+
+    if tsu[30] then
         print("────୨ৎ────────୨ৎ────")
         print("TG : @BadLuck_69")
         print("YT : CheatCode Revolution")
