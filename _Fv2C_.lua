@@ -1015,6 +1015,7 @@ end
 gg.setVisible(false)
 gg.alert(
     "────୨ৎ────────୨ৎ────\n" ..
+    "🌹 MANAV PREMIUM SCRIPT\n" ..
     "✨ Script By: CheatCode Revolution\n" ..
     "📱 Telegram: @BadLuck_69\n" ..
     "🎮 YouTube: CheatCode Revolution\n" ..
@@ -1065,6 +1066,8 @@ local offsets = {
         OnTamperDetected = 0x3279D74, -- SecureVarInt::OnTamperDetected
         get_isCoopOrderExpired = 0x25FECD8, --CoopOrderCard_ViewModel::get_isCoopOrderExpired
         CurrentUnix = 0x344CB50, --PartnerAnimalTime::CurrentUnix
+        get_bonusTaskCount = 0x2B88BC8,--Game.StateMachine.Machines.BaseBoatRace.BaseBoatRaceContext::get_bonusTaskCount
+        get_SpinLeft = 0x36770AC, --SocialDailyBonusManager::get_SpinLeft
     },
     -- ["1.2.4"] = {
     --     Remove = 0x40AFE28,
@@ -1092,7 +1095,30 @@ setValue(currentOffset.set_CheaterTrackingEnabled, 4, "~A8 RET")
 setValue(currentOffset.CheaterFixedScore, 4, "~A8 RET")
 setValue(currentOffset.OnTamperDetected, 4, "~A8 RET")
 
+x = "BoatRaceV4Context" 
+o = 0x18A --<CheaterTrackingEnabled>k__BackingField
+t = 1 
+findClass()
 
+local count = gg.getResultsCount()
+if count == 0 then
+    gg.toast("💥")
+else
+    x = 1 
+    t = 1 
+    refineNum()
+
+    local count2 = gg.getResultsCount()
+    if count2 == 0 then
+        gg.toast("💥")
+    else
+        x = 0 
+        t = 1 
+        editAll()
+    end
+    clearAll()
+end
+  
 
 function Translate(InputText, SystemLangCode, TargetLangCode)
   _ = InputText __ = SystemLangCode ___ = TargetLangCode
@@ -1960,6 +1986,7 @@ end
 
 
 function EVI_ON()
+    gg.alert("@credit - Ertan Hancer\n@ertanhancer", "","")
     local saved = gg.getListItems()
     
     if #saved == 0 then
@@ -2041,6 +2068,7 @@ end
 
 
 function ITM_ON()
+    gg.alert("@credit - Ertan Hancer\n@ertanhancer", "","")
     local saved = gg.getListItems()
     if #saved == 0 then
         x = "ProtoFixedLootInfo"
@@ -2610,6 +2638,7 @@ end
 
 
 function PC_ON()
+    gg.alert("@credit - Ertan Hancer\n@ertanhancer", "","")
     local items = { 
         "[ + ] Anchor", 
         "[ + ] Animal Cash", 
@@ -2791,118 +2820,515 @@ function AWI_OFF()
 end
 
 
+-- function NC_ON()
+    -- gg.alert("@credit - Ertan Hancer\n@ertanhancer", "","")
+    -- local choice = gg.alert(
+        -- "📝 TUTORIAL 📝\n-----------------\n" ..
+        -- "1️⃣ Go to settings → rename your name to: 12345678901234567890\n" ..
+        -- "2️⃣ Close settings and choose Step 1 complete\n" ..
+        -- "3️⃣ Then choose Go to Step 2",
+        -- "✅ OK, I understand",
+        -- "✅ Step 1 complete",
+        -- "✅ Go to Step 2"
+    -- )
+
+    -- -- Step 0: Copy Name
+    -- if choice == 1 then
+        -- gg.copyText("12345678901234567890")
+        -- gg.toast("Name copied 📋")
+        -- return
+    -- end
+
+    -- -- Step 1: Search & Patch
+    -- if choice == 2 then
+        -- -- Prompt for character length with maximum of 148
+        -- local charLengthPrompt = gg.prompt(
+            -- {"Enter character length (max 148):"},
+            -- {63},
+            -- {"number"}
+        -- )
+        
+        -- if not charLengthPrompt then 
+            -- gg.toast("❌ Cancelled")
+            -- return 
+        -- end
+        
+        -- local charLength = tonumber(charLengthPrompt[1]) or 63
+        
+        -- -- Enforce maximum limit of 148
+        -- if charLength > 148 then
+            -- charLength = 148
+            -- gg.toast("Character length limited to 148")
+        -- elseif charLength < 1 then
+            -- charLength = 1
+            -- gg.toast("Character length set to minimum 1")
+        -- end
+        
+        -- gg.setRanges(gg.REGION_ANONYMOUS)
+        -- gg.searchNumber(";12345678901234567890")
+        -- o = -0x4 t = 4 applyOffset()
+        -- x = 20 t = 4 refineNum()
+        -- x = charLength -- Use the input character length
+        -- t = 4 editAll()
+        -- clearAll()
+        -- gg.alert("✅ Done!\nRestart your game.\nThen choose 'Go to Step 2'.", "OK")
+        -- return
+    -- end
+
+    -- -- Step 2: Rename
+    -- if choice == 3 then
+        -- gg.alert("🔑 Step 2: Change Name", "CONTINUE")
+
+        -- local pr1 = gg.prompt({"Enter new name length:"}, {63}, {[1] = 'number'})
+        -- if not pr1 then return end
+        -- local nameLength = pr1[1]
+
+        -- -- UTF16 Handling
+        -- local function isUTF16(flag)
+            -- return flag and ";" or ":", flag and 2 or 1
+        -- end
+
+        -- -- Replace name with new one
+        -- local function setNewName(editname, playername)
+            -- local stringTag, step = isUTF16(playername[2])
+            -- local results = gg.getResults(gg.getResultsCount())
+            -- local replace, sizes = {}, {}
+            
+            -- gg.clearResults()
+            -- for _, res in ipairs(results) do
+                -- sizes[#sizes+1] = {address = res.address - 0x4, flags = gg.TYPE_WORD}
+                -- local addr = res.address
+                -- for i = 1, #editname do
+                    -- replace[#replace+1] = {address = addr, flags = gg.TYPE_WORD, value = string.byte(editname:sub(i,i))}
+                    -- addr = addr + step
+                -- end
+            -- end
+            
+            -- sizes = gg.getValues(sizes)
+            -- for i, v in ipairs(sizes) do
+                -- if v.value == #playername[1] then
+                    -- v.value = #editname
+                -- end
+            -- end
+
+            -- gg.setValues(sizes)
+            -- gg.setValues(replace)
+            -- gg.alert("✅ New name set: " .. editname)
+        -- end
+
+        -- -- Search for name in memory
+        -- local function findName64(playername, nameLength)
+            -- local stringTag, step = isUTF16(playername[2])
+            -- gg.setRanges(gg.REGION_ANONYMOUS)
+            -- gg.searchNumber(stringTag .. playername[1])
+
+            -- if gg.getResultsCount() == 0 then
+                -- gg.toast("⚠️ Name not found, try again")
+                -- return
+            -- end
+
+            -- local length = #playername[1]
+            -- for i = 1, length do
+                -- gg.refineNumber(stringTag .. playername[1]:sub(1, length))
+                -- length = length - 1
+            -- end
+
+            -- -- Refinements (your fixed pattern)
+            -- local refineVals = {3407923, 3538997, 3670071, 3145785}
+            -- for _, val in ipairs(refineVals) do
+                -- o = 0x4 t = 4 applyOffset()
+                -- x = val t = 4 refineNum()
+                -- gg.sleep(800)
+            -- end
+
+            -- o = -0x14 t = 4 applyOffset()
+            -- x = nameLength t = 4 refineNum()
+            -- o = -0x10 t = 4 applyOffset()
+            -- x = "C351h~FFFF3CAFh" t = 4 refineNum()
+            -- o = 0x14 t = 2 applyOffset()
+
+            -- local newname = gg.prompt({"Enter new name:"}, nil, {[1] = 'text'})
+            -- if newname and newname[1] ~= "" then
+                -- setNewName(newname[1], playername)
+            -- end
+        -- end
+
+        -- -- Start Step 2
+        -- local playername = gg.prompt(
+            -- {"Input current name to search", "UTF-16 Encoding"},
+            -- {"12345678901234567890", true},
+            -- {"text", "checkBox"}
+        -- )
+
+        -- if playername then
+            -- findName64(playername, nameLength)
+        -- end
+
+        -- gg.toast("Step 2 complete ✅")
+        -- return
+    -- end
+
+    -- -- Cancel
+    -- gg.toast("❌ Cancelled")
+    -- return nil
+-- end
+
+
+function NC_ON()
+    gg.alert("@credit - Ertan Hancer\n@ertanhancer", "","")
+    
+    local choice = gg.alert(
+        "📝 TUTORIAL 📝\n-----------------\n" ..
+        "1️⃣ Go to settings → rename your name to: 12345678901234567890\n" ..
+        "2️⃣ Close settings and choose Step 1 complete\n" ..
+        "3️⃣ Then choose Go to Step 2",
+        "✅ OK, I understand",
+        "✅ Step 1 complete",
+        "✅ Go to Step 2"
+    )
+
+    -- Step 0: Copy Name  
+    if choice == 1 then  
+        gg.copyText("12345678901234567890")  
+        gg.toast("Name copied 📋")  
+        return  
+    end  
+
+    -- Step 1: Search & Patch (Always use 63 characters)
+    if choice == 2 then  
+        local charLength = 63
+        gg.setRanges(gg.REGION_ANONYMOUS)  
+        gg.searchNumber(";12345678901234567890")  
+        o = -0x4 t = 4 applyOffset()  
+        x = 20 t = 4 refineNum()  
+        x = charLength
+        t = 4 editAll()  
+        clearAll()  
+        gg.alert("✅ Done!\nRestart your game.\nThen choose 'Go to Step 2'.", "OK")  
+        return  
+    end  
+
+    -- Step 2: Rename with color options
+    if choice == 3 then  
+        gg.alert("🔑 Step 2: Change Name", "CONTINUE")  
+
+        -- Always use 63 character length
+        local nameLength = 63
+
+        -- UTF16 Handling  
+        local function isUTF16(flag)  
+            return flag and ";" or ":", flag and 2 or 1  
+        end  
+
+        -- Color selection menu
+        local colorChoice = gg.multiChoice({
+            "🌈 Rainbow Color",
+            "🔴 Red",
+            "🟡 Yellow",
+            "🟣 Purple",
+            "🟢 Green",
+            "🔵 Blue",
+            "💖 Pink"
+        }, nil, "🎨 Choose Name Color:")
+
+        if not colorChoice then 
+            gg.toast("❌ Color selection cancelled")
+            return 
+        end
+
+        -- Get new name from user (minimum 7 characters)
+        local newname = gg.prompt(
+            {"Enter new name (min 7 characters):"}, 
+            {""}, 
+            {"text"}
+        )
+        
+        if not newname or newname[1] == "" then
+            gg.toast("❌ No name entered")
+            return
+        end
+        
+        -- Validate name length
+        if #newname[1] < 7 then
+            gg.alert("❌ Name must be at least 7 characters long!")
+            return
+        end
+        
+        -- Apply color formatting
+        local coloredName = ""
+        local colorCode = ""
+        
+        if colorChoice[1] then -- Rainbow
+            local rainbowColors = {"ff0000", "ffa500", "ffff00", "008000", "0000ff", "4b0082", "ee82ee"}
+            for i = 1, #newname[1] do
+                local colorIndex = ((i-1) % #rainbowColors) + 1
+                coloredName = coloredName .. "[" .. rainbowColors[colorIndex] .. "]" .. newname[1]:sub(i, i)
+            end
+        elseif colorChoice[2] then -- Red
+            colorCode = "ff0000"
+        elseif colorChoice[3] then -- Yellow
+            colorCode = "ffff00"
+        elseif colorChoice[4] then -- Purple
+            colorCode = "4b0082"
+        elseif colorChoice[5] then -- Green
+            colorCode = "008000"
+        elseif colorChoice[6] then -- Blue
+            colorCode = "0000ff"
+        elseif colorChoice[7] then -- Pink
+            colorCode = "ee82ee"
+        end
+        
+        -- For single colors, apply to all characters
+        if colorCode ~= "" then
+            for i = 1, #newname[1] do
+                coloredName = coloredName .. "[" .. colorCode .. "]" .. newname[1]:sub(i, i)
+            end
+        end
+
+        -- Replace name with new one  
+        local function setNewName(editname, playername)  
+            local stringTag, step = isUTF16(playername[2])  
+            local results = gg.getResults(gg.getResultsCount())  
+            local replace, sizes = {}, {}  
+              
+            gg.clearResults()  
+            for _, res in ipairs(results) do  
+                sizes[#sizes+1] = {address = res.address - 0x4, flags = gg.TYPE_WORD}  
+                local addr = res.address  
+                for i = 1, #editname do  
+                    replace[#replace+1] = {address = addr, flags = gg.TYPE_WORD, value = string.byte(editname:sub(i,i))}  
+                    addr = addr + step  
+                end  
+            end  
+              
+            sizes = gg.getValues(sizes)  
+            for i, v in ipairs(sizes) do  
+                if v.value == #playername[1] then  
+                    v.value = #editname  
+                end  
+            end  
+
+            gg.setValues(sizes)  
+            gg.setValues(replace)  
+            gg.alert("✅ New name set: " .. editname)  
+        end  
+
+        -- Search for name in memory (automatically search for 12345678901234567890)
+        local function findName64(nameLength)  
+            local playername = {"12345678901234567890", true}
+            local stringTag, step = isUTF16(playername[2])  
+            gg.setRanges(gg.REGION_ANONYMOUS)  
+            gg.searchNumber(stringTag .. playername[1])  
+
+            if gg.getResultsCount() == 0 then  
+                gg.toast("⚠️ Name not found, try again")  
+                return  
+            end  
+
+            local length = #playername[1]  
+            for i = 1, length do  
+                gg.refineNumber(stringTag .. playername[1]:sub(1, length))  
+                length = length - 1  
+            end  
+
+            -- Refinements (your fixed pattern)  
+            local refineVals = {3407923, 3538997, 3670071, 3145785}  
+            for _, val in ipairs(refineVals) do  
+                o = 0x4 t = 4 applyOffset()  
+                x = val t = 4 refineNum()  
+                gg.sleep(800)  
+            end  
+
+            o = -0x14 t = 4 applyOffset()  
+            x = nameLength t = 4 refineNum()  
+            o = -0x10 t = 4 applyOffset()  
+            x = "C351h~FFFF3CAFh" t = 4 refineNum()  
+            o = 0x14 t = 2 applyOffset()  
+
+            setNewName(coloredName, playername)  
+        end  
+
+        -- Start Step 2  
+        findName64(nameLength)  
+        gg.toast("Step 2 complete ✅")  
+        return  
+    end  
+
+    -- Cancel  
+    gg.toast("❌ Cancelled")  
+    return nil
+end
+
+
+function NC_OFF()
+    gg.toast("- Hollyy Meowwwww -")
+    return nil
+end
+
+
+function RBM_ON()
+    local userInput = gg.prompt(
+        { 'Enter Bonus Task Points (1~100):' },
+        nil,
+        { [1] = 'number' }
+    )
+
+    if userInput == nil then 
+        return -- user cancelled input
+    end
+
+    local bonusTask = tonumber(userInput[1])
+
+    -- Validation
+    if not (bonusTask and bonusTask >= 1 and bonusTask <= 100) then
+        gg.alert("Invalid input! Please enter a value between 1 and 100.")
+        return
+    end
+
+    -- Bonus Task Patch
+    injectAssembly(currentOffset.get_bonusTaskCount, bonusTask)
+
+    gg.toast("- Bonus Task set to [" .. bonusTask .. "]")
+    return true
+end
+
+function RBM_OFF()
+    reset(currentOffset.get_bonusTaskCount)
+    gg.toast("- Restored Bonus Task -")
+    return nil
+end
+
+function SPN_ON()
+    injectAssembly(currentOffset.get_SpinLeft, 9999)
+    gg.toast("- Activated -")
+    return true
+end
+
+function SPN_OFF()
+    reset(currentOffset.get_SpinLeft)
+    gg.toast("- Restored -")
+    return nil
+end
+
 ----------- MENU -----------
 
 gg.setVisible(true)
 local menuList = {
+    -- 🐾 Items & Selling
     "❄️ Freez All Items",
+    "💰 Sell Goods For Free",
+    "💰 Sell Anything In Farm",
+    "🎉 Porspector Corner Item",
+
+    -- 💰 Expansions & Buildings
     "💰 Expend Farm With Coins",
+    "⛩️ Upgrade All Buildings",
+
+    -- 🗝️ Costs & Keys
     "🗝️ Item Cost 0 Key",
+    "🆓 Porspector Corner Free Play",
+
+    -- 🐷 Animals
+    "🐷 One Feed Gold",
+    "🐷 Show Animal Wiegh-in",
+
+    -- 🏕️ Farming & Barn
     "🏕️ Fast Farming",
+    "🐾 Set Barn Seaway",
+    "💂 Farm Hands Always Available For Use",
+
+    -- 🙌 Helpers
     "🙌 Request Farmhands",
     "🎁 Send Helping Hands",
-    "💰 Sell Goods For Free",
+
+    -- ⚡ Quest & Orders
     "⚡ Quest Book Fast Finish",
     "📝 Maries Orders Ask Button",
     "🛒 Maries Orders Sell Active",
+    "📋 Marie Order Item Amount",
+    "📋 Maries Board Get/Send Xp, Coin, Timber",
+    "🎯 Maries Order Weekly Score",
+
+    -- 🛒 Market
     "🛒 Auto Buy (Market)",
+    "🎖️ Active Hidden Market Items",
+
+    -- 🎄 Fair & Workshops
     "🎄 Country Fair Workshop Multiplier",
     "⛏️ Workshops Crafting Amount",
+
+    -- 🎰 Co-Op
     "🎰 Enable 8 Co-Op Slots",
+    "⛔ Co-op Order Instant Expire",
+
+    -- 🙃 Chat & Social
     "🙃 Unlock Chat Emoji",
-    "🆓 Porspector Corner Free Play",
-    "🐾 Set Barn Seaway",
+    "🌈 Edit UserName With Rainbow Colour",
+
+    -- ⛵ Boat Race
     "⛵ (Br) Bonus Task Points",
+    "⛵ (Br) Set Bonus Task Points",
     "⛵ (Br) Unlimited Discard Task",
     "⛵ (Br) Enter Bonus Mode",
     "⛵ (Br) Bonus Task Skip Price",
     "⛵ (Br) Task Requirement (1)",
+
+    -- ♻️ Wheel & Spins
+    "♻️ Prize Whell Unlimited Spins",
+
+    -- ⭐ Decoration
     "⭐ Unlimited Decoration",
-    "🎖️ Active Hidden Market Items",
-    "🎯 Maries Order Weekly Score",
+
+    -- 🔓 Unlocks & Passes
     "🔓 Unlock Hairloom Pass",
     "🔓 Unlock Mystery Master Pass",
     "🔓 Unlock Elite Plus Badge",
+    "🔓 Unlock Event Pass",
+
+    -- 🎃 Elite Features
     "🎃 Auto Complete Elite Tokens",
     "🧩 Get Elite Badge Tokens",
-    "🔓 Unlock Event Pass",
+
+    -- 🤷 Place & Entity
     "🤷 Place Entity Anywhere (Water/Land)",
-    "💰 Sell Anything In Farm",
-    "⛩️ Upgrade All Buildings",
+
+    -- 🔓 Unlimited Resources
     "🔓 Unlimited Crops, Animals, Key Maker",
-    "💂 Farm Hands Always Available For Use",
-    "📋 Maries Board Get/Send Xp, Coin, Timber",
+
+    -- 🔥 Water Items
     "🔥 Get Event Items (From Water)",
     "⚽ Get Normal Items (From Water)",
-    "🐷 One Feed Gold",
-    "📋 Marie Order Item Amount",
-    "🎉 Porspector Corner Item",
-    "⛔ Co-op Order Instant Expire",
-    "🐷 Show Animal Wiegh-in",
+
+    -- 🚫 Exit
     "🚫 Exit Script...."
 }
 
 -- 🌐 Auto-translate menu
 gg.setVisible(false)
-gg.toast("- Translation Started..! Please Waite......-")
+gg.toast("- Translation Started.....-")
 for i, v in ipairs(menuList) do
     menuList[i] = Translate(v, "en", TargetLang)
 end
 gg.toast("- Translation Completed! -")
 gg.setVisible(true)
+
+-- The rest of your code remains exactly the same...
 local checkList = {
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil,
-    nil
+    nil, nil, nil, nil, nil, nil, nil, nil, nil, nil,
+    nil, nil, nil, nil, nil, nil, nil, nil, nil, nil,
+    nil, nil, nil, nil, nil, nil, nil, nil, nil, nil,
+    nil, nil, nil, nil, nil, nil, nil, nil, nil, nil,
+    nil, nil, nil, nil, nil, nil, nil
 }
 
-
+-- All function definitions remain exactly the same...
 function menu()
     local tsu = gg.multiChoice(menuList, checkList, "🌹 Script By : @CheatCode\n🔖 Bypass Protection Is Running.....\n🟢 Script Mode : Full Safe\n────୨ৎ────────୨ৎ────")
     if not tsu  then
         return
     end
+    -- All the if statements for each option remain exactly the same...
+    -- Only the order of checks has changed to match the new menu organization
     if tsu[1] ~= checkList[1]  then
         if tsu[1]  then
             checkList[1] = Remove_ON()
@@ -2912,306 +3338,327 @@ function menu()
     end
     if tsu[2] ~= checkList[2]  then
         if tsu[2]  then
-            checkList[2] = CanExpandWithCoins_ON()
+            checkList[2] = SG_ON()
         else
-            checkList[2] = CanExpandWithCoins_OFF()
+            checkList[2] = SG_OFF()
         end
     end
     if tsu[3] ~= checkList[3]  then
         if tsu[3]  then
-            checkList[3] = ItemCost_ON()
+            checkList[3] = SE_ON()
         else
-            checkList[3] = ItemCost_OFF()
+            checkList[3] = SE_OFF()
         end
     end
     if tsu[4] ~= checkList[4]  then
         if tsu[4]  then
-            checkList[4] = FFC_ON()
+            checkList[4] = PC_ON()
         else
-            checkList[4] = FFC_OFF()
+            checkList[4] = PC_OFF()
         end
     end
     if tsu[5] ~= checkList[5]  then
         if tsu[5]  then
-            checkList[5] = FHND_ON()
+            checkList[5] = CanExpandWithCoins_ON()
         else
-            checkList[5] = FHND_OFF()
+            checkList[5] = CanExpandWithCoins_OFF()
         end
     end
     if tsu[6] ~= checkList[6]  then
         if tsu[6]  then
-            checkList[6] = SHND_ON()
+            checkList[6] = UB_ON()
         else
-            checkList[6] = SHND_OFF()
+            checkList[6] = UB_OFF()
         end
     end
     if tsu[7] ~= checkList[7]  then
         if tsu[7]  then
-            checkList[7] = SG_ON()
+            checkList[7] = ItemCost_ON()
         else
-            checkList[7] = SG_OFF()
+            checkList[7] = ItemCost_OFF()
         end
     end
     if tsu[8] ~= checkList[8]  then
         if tsu[8]  then
-            checkList[8] = QuestBookFastFinish_ON()
+            checkList[8] = ProspectorCornerFreePlay_ON()
         else
-            checkList[8] = QuestBookFastFinish_OFF()
+            checkList[8] = ProspectorCornerFreePlay_OFF()
         end
     end
     if tsu[9] ~= checkList[9]  then
         if tsu[9]  then
-            checkList[9] = MariesOrdersAskButton_ON()
+            checkList[9] = OFG_ON()
         else
-            checkList[9] = MariesOrdersAskButton_OFF()
+            checkList[9] = OFG_OFF()
         end
     end
     if tsu[10] ~= checkList[10]  then
         if tsu[10]  then
-            checkList[10] = MariesOrdersSellActive_ON()
+            checkList[10] = AWI_ON()
         else
-            checkList[10] = MariesOrdersSellActive_OFF()
+            checkList[10] = AWI_OFF()
         end
     end
     if tsu[11] ~= checkList[11]  then
         if tsu[11]  then
-            checkList[11] = AutoBuyMarket_ON()
+            checkList[11] = FFC_ON()
         else
-            checkList[11] = AutoBuyMarket_OFF()
+            checkList[11] = FFC_OFF()
         end
     end
     if tsu[12] ~= checkList[12]  then
         if tsu[12]  then
-            checkList[12] = GetCountyFairPointsMultiplierForBuildingLevel_ON()
+            checkList[12] = SetBarnSeaway_ON()
         else
-            checkList[12] = GetCountyFairPointsMultiplierForBuildingLevel_OFF()
+            checkList[12] = SetBarnSeaway_OFF()
         end
     end
     if tsu[13] ~= checkList[13]  then
         if tsu[13]  then
-            checkList[13] = WorkshopsCraftingAmount_ON()
+            checkList[13] = HH_ON()
         else
-            checkList[13] = WorkshopsCraftingAmount_OFF()
+            checkList[13] = HH_OFF()
         end
     end
     if tsu[14] ~= checkList[14]  then
         if tsu[14]  then
-            checkList[14] = CoopSlots8_ON()
+            checkList[14] = FHND_ON()
         else
-            checkList[14] = CoopSlots8_OFF()
+            checkList[14] = FHND_OFF()
         end
     end
     if tsu[15] ~= checkList[15]  then
         if tsu[15]  then
-            checkList[15] = UnlockChatEmoji_ON()
+            checkList[15] = SHND_ON()
         else
-            checkList[15] = UnlockChatEmoji_OFF()
+            checkList[15] = SHND_OFF()
         end
     end
     if tsu[16] ~= checkList[16]  then
         if tsu[16]  then
-            checkList[16] = ProspectorCornerFreePlay_ON()
+            checkList[16] = QuestBookFastFinish_ON()
         else
-            checkList[16] = ProspectorCornerFreePlay_OFF()
+            checkList[16] = QuestBookFastFinish_OFF()
         end
     end
     if tsu[17] ~= checkList[17]  then
         if tsu[17]  then
-            checkList[17] = SetBarnSeaway_ON()
+            checkList[17] = MariesOrdersAskButton_ON()
         else
-            checkList[17] = SetBarnSeaway_OFF()
+            checkList[17] = MariesOrdersAskButton_OFF()
         end
     end
     if tsu[18] ~= checkList[18]  then
         if tsu[18]  then
-            checkList[18] = BonusTaskPoints_ON()
+            checkList[18] = MariesOrdersSellActive_ON()
         else
-            checkList[18] = BonusTaskPoints_OFF()
+            checkList[18] = MariesOrdersSellActive_OFF()
         end
     end
     if tsu[19] ~= checkList[19]  then
         if tsu[19]  then
-            checkList[19] = UnlimitedBRDiscardTask_ON()
+            checkList[19] = MIA_ON()
         else
-            checkList[19] = UnlimitedBRDiscardTask_OFF()
+            checkList[19] = MIA_OFF()
         end
     end
     if tsu[20] ~= checkList[20]  then
         if tsu[20]  then
-            checkList[20] = EnterBonusMode_ON()
+            checkList[20] = MB_ON()
         else
-            checkList[20] = EnterBonusMode_OFF()
+            checkList[20] = MB_OFF()
         end
     end
     if tsu[21] ~= checkList[21]  then
         if tsu[21]  then
-            checkList[21] = BonusTaskSkipPrice_ON()
+            checkList[21] = MWS_ON()
         else
-            checkList[21] = BonusTaskSkipPrice_OFF()
+            checkList[21] = MWS_OFF()
         end
     end
     if tsu[22] ~= checkList[22]  then
         if tsu[22]  then
-            checkList[22] = BoatRaceTaskRequirement_ON()
+            checkList[22] = AutoBuyMarket_ON()
         else
-            checkList[22] = BoatRaceTaskRequirement_OFF()
+            checkList[22] = AutoBuyMarket_OFF()
         end
     end
     if tsu[23] ~= checkList[23]  then
         if tsu[23]  then
-            checkList[23] = Deco_ON()
+            checkList[23] = AHM_ON()
         else
-            checkList[23] = Deco_OFF()
+            checkList[23] = AHM_OFF()
         end
     end
     if tsu[24] ~= checkList[24]  then
         if tsu[24]  then
-            checkList[24] = AHM_ON()
+            checkList[24] = GetCountyFairPointsMultiplierForBuildingLevel_ON()
         else
-            checkList[24] = AHM_OFF()
+            checkList[24] = GetCountyFairPointsMultiplierForBuildingLevel_OFF()
         end
     end
     if tsu[25] ~= checkList[25]  then
         if tsu[25]  then
-            checkList[25] = MWS_ON()
+            checkList[25] = WorkshopsCraftingAmount_ON()
         else
-            checkList[25] = MWS_OFF()
+            checkList[25] = WorkshopsCraftingAmount_OFF()
         end
     end
     if tsu[26] ~= checkList[26]  then
         if tsu[26]  then
-            checkList[26] = HPass_ON()
+            checkList[26] = CoopSlots8_ON()
         else
-            checkList[26] = HPass_OFF()
+            checkList[26] = CoopSlots8_OFF()
         end
     end
     if tsu[27] ~= checkList[27]  then
         if tsu[27]  then
-            checkList[27] = MPass_ON()
+            checkList[27] = CEX_ON()
         else
-            checkList[27] = MPass_OFF()
+            checkList[27] = CEX_OFF()
         end
     end
     if tsu[28] ~= checkList[28]  then
         if tsu[28]  then
-            checkList[28] = ELPass_ON()
+            checkList[28] = UnlockChatEmoji_ON()
         else
-            checkList[28] = ELPass_OFF()
+            checkList[28] = UnlockChatEmoji_OFF()
         end
     end
     if tsu[29] ~= checkList[29]  then
         if tsu[29]  then
-            checkList[29] = ELtoken_ON()
+            checkList[29] = NC_ON()
         else
-            checkList[29] = ELtoken_OFF()
+            checkList[29] = NC_OFF()
         end
     end
     if tsu[30] ~= checkList[30]  then
         if tsu[30]  then
-            checkList[30] = ELItoken_ON()
+            checkList[30] = BonusTaskPoints_ON()
         else
-            checkList[30] = ELItoken_OFF()
+            checkList[30] = BonusTaskPoints_OFF()
         end
     end
     if tsu[31] ~= checkList[31]  then
         if tsu[31]  then
-            checkList[31] = EVP_ON()
+            checkList[31] = RBM_ON()
         else
-            checkList[31] = EVP_OFF()
+            checkList[31] = RBM_OFF()
         end
     end
     if tsu[32] ~= checkList[32]  then
         if tsu[32]  then
-            checkList[32] = PEA_ON()
+            checkList[32] = UnlimitedBRDiscardTask_ON()
         else
-            checkList[32] = PEA_OFF()
+            checkList[32] = UnlimitedBRDiscardTask_OFF()
         end
     end
     if tsu[33] ~= checkList[33]  then
         if tsu[33]  then
-            checkList[33] = SE_ON()
+            checkList[33] = EnterBonusMode_ON()
         else
-            checkList[33] = SE_OFF()
+            checkList[33] = EnterBonusMode_OFF()
         end
     end
     if tsu[34] ~= checkList[34]  then
         if tsu[34]  then
-            checkList[34] = UB_ON()
+            checkList[34] = BonusTaskSkipPrice_ON()
         else
-            checkList[34] = UB_OFF()
+            checkList[34] = BonusTaskSkipPrice_OFF()
         end
     end
     if tsu[35] ~= checkList[35]  then
         if tsu[35]  then
-            checkList[35] = UC_ON()
+            checkList[35] = BoatRaceTaskRequirement_ON()
         else
-            checkList[35] = UC_OFF()
+            checkList[35] = BoatRaceTaskRequirement_OFF()
         end
     end
     if tsu[36] ~= checkList[36]  then
         if tsu[36]  then
-            checkList[36] = HH_ON()
+            checkList[36] = SPN_ON()
         else
-            checkList[36] = HH_OFF()
+            checkList[36] = SPN_OFF()
         end
     end
     if tsu[37] ~= checkList[37]  then
         if tsu[37]  then
-            checkList[37] = MB_ON()
+            checkList[37] = Deco_ON()
         else
-            checkList[37] = MB_OFF()
+            checkList[37] = Deco_OFF()
         end
     end
     if tsu[38] ~= checkList[38]  then
         if tsu[38]  then
-            checkList[38] = EVI_ON()
+            checkList[38] = HPass_ON()
         else
-            checkList[38] = EVI_OFF()
+            checkList[38] = HPass_OFF()
         end
     end
     if tsu[39] ~= checkList[39]  then
         if tsu[39]  then
-            checkList[39] = ITM_ON()
+            checkList[39] = MPass_ON()
         else
-            checkList[39] = ITM_OFF()
+            checkList[39] = MPass_OFF()
         end
     end
     if tsu[40] ~= checkList[40]  then
         if tsu[40]  then
-            checkList[40] = OFG_ON()
+            checkList[40] = ELPass_ON()
         else
-            checkList[40] = OFG_OFF()
+            checkList[40] = ELPass_OFF()
         end
     end
     if tsu[41] ~= checkList[41]  then
         if tsu[41]  then
-            checkList[41] = MIA_ON()
+            checkList[41] = EVP_ON()
         else
-            checkList[41] = MIA_OFF()
+            checkList[41] = EVP_OFF()
         end
     end
     if tsu[42] ~= checkList[42]  then
         if tsu[42]  then
-            checkList[42] = PC_ON()
+            checkList[42] = ELtoken_ON()
         else
-            checkList[42] = PC_OFF()
+            checkList[42] = ELtoken_OFF()
         end
     end
     if tsu[43] ~= checkList[43]  then
         if tsu[43]  then
-            checkList[43] = CEX_ON()
+            checkList[43] = ELItoken_ON()
         else
-            checkList[43] = CEX_OFF()
+            checkList[43] = ELItoken_OFF()
         end
     end
     if tsu[44] ~= checkList[44]  then
         if tsu[44]  then
-            checkList[44] = AWI_ON()
+            checkList[44] = PEA_ON()
         else
-            checkList[44] = AWI_OFF()
+            checkList[44] = PEA_OFF()
         end
     end
-    if tsu[45]  then
+    if tsu[45] ~= checkList[45]  then
+        if tsu[45]  then
+            checkList[45] = UC_ON()
+        else
+            checkList[45] = UC_OFF()
+        end
+    end
+    if tsu[46] ~= checkList[46]  then
+        if tsu[46]  then
+            checkList[46] = EVI_ON()
+        else
+            checkList[46] = EVI_OFF()
+        end
+    end
+    if tsu[47] ~= checkList[47]  then
+        if tsu[47]  then
+            checkList[47] = ITM_ON()
+        else
+            checkList[47] = ITM_OFF()
+        end
+    end
+    if tsu[48]  then
         gg.getListItems()
         gg.clearList()
         print("────୨ৎ────────୨ৎ────")
